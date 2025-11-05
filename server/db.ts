@@ -1,21 +1,47 @@
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle,MySql2Database } from "drizzle-orm/mysql2";
+import mysql, { PoolOptions, Pool } from "mysql2";
 import { InsertUser, users, services, projects, teamMembers, contactMessages, InsertService, InsertProject, InsertTeamMember, InsertContactMessage } from "../drizzle/schema";
+import * as schema from "../drizzle/schema";
 import { ENV } from './_core/env';
 
-let _db: ReturnType<typeof drizzle> | null = null;
+
+let pool: Pool | null = null;
+let db: MySql2Database<typeof schema> | null = null;
+
+
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
+  if (db) return db;
+
+  const url = process.env.DATABASE_URL; // ex: mysql://USER:PASS@host:4000/HOPE
+  if (!url) throw new Error("DATABASE_URL manquante");
+
+  // IMPORTANT: pool "callback", pas le pool de mysql2/promise
+  const opts: PoolOptions = { uri: url, waitForConnections: true, connectionLimit: 10 };
+  // TLS TiDB
+  (opts as any).ssl = { rejectUnauthorized: false, minVersion: "TLSv1.2" };
+
+  pool = mysql.createPool(opts);
+
+  // (facultatif) petit check de connexion en API promise sur le pool callback
+  try {
+    const conn = await pool.promise().getConnection();
+    const [dbn] = await conn.query<any[]>("SELECT DATABASE() d");
+    const [ver] = await conn.query<any[]>("SELECT VERSION() v");
+    console.info(`[DB] ${dbn[0]?.d} – ${ver[0]?.v}`);
+    conn.release();
+  } catch (e) {
+    console.error("[DB] Connection failed:", e);
+    pool.end();
+    pool = null;
+    throw e;
   }
-  return _db;
+
+  db = drizzle(pool, { schema, mode: 'default' }); 
+  return db;
 }
+
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
