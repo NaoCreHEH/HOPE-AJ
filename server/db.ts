@@ -2,46 +2,20 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, services, projects, teamMembers, contactMessages, InsertService, InsertProject, InsertTeamMember, InsertContactMessage } from "../drizzle/schema";
 import { ENV } from './_core/env';
-import mysql, { Pool } from "mysql2/promise";
 
-let pool: Pool | null = null;
 let _db: ReturnType<typeof drizzle> | null = null;
 
 export async function getDb() {
-    if (_db) return _db;
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL manquante");
-
-  pool = mysql.createPool({
-    uri: url,                       // mysql://user:pass@gateway:4000/HOPE
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 5,
-    idleTimeout: 60_000,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0,
-    connectTimeout: 15_000,
-    // TiDB Cloud = TLS
-    ssl: { rejectUnauthorized: false, minVersion: "TLSv1.2" },
-    supportBigNumbers: true,
-    dateStrings: true,
-  });
-
-  try {
-    const conn = await pool.getConnection();
-    const [who] = await conn.query<any[]>("SELECT CURRENT_USER() u");
-    const [dbn] = await conn.query<any[]>("SELECT DATABASE() d");
-    const [ver] = await conn.query<any[]>("SELECT VERSION() v");
-    console.info(`[DB] Connected as ${who[0]?.u} on db=${dbn[0]?.d} (${ver[0]?.v})`);
-    conn.release();
-  } catch (e) {
-    console.error("[DB] Connection failed:", e);
-    await pool.end(); pool = null;
-    throw e;
+  if (!_db && process.env.DATABASE_URL) {
+    try {
+      _db = drizzle(process.env.DATABASE_URL);
+    } catch (error) {
+      console.warn("[Database] Failed to connect:", error);
+      _db = null;
+    }
   }
-
-  _db = drizzle(pool);
   return _db;
+}
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
