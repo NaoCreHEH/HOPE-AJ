@@ -3,11 +3,12 @@ import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, services, projects, teamMembers, contactMessages, InsertService, InsertProject, InsertTeamMember, InsertContactMessage } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import mysql, { Pool } from "mysql2/promise";
+
 let pool: Pool | null = null;
 let _db: ReturnType<typeof drizzle> | null = null;
 
 export async function getDb() {
-    if (db) return db;
+    if (_db) return _db;
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL manquante");
 
@@ -39,8 +40,8 @@ export async function getDb() {
     throw e;
   }
 
-  db = drizzle(pool);
-  return db;
+  _db = drizzle(pool);
+  return _db;
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
