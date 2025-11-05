@@ -41,7 +41,7 @@ export const projects = mysqlTable("projects", {
   location: varchar("location", { length: 255 }).notNull(),
   description: text("description").notNull(),
   imageUrl: varchar("image_url", { length: 500 }),
-  date: timestamp("date"),
+  date: timestamp("event_date"),
   displayOrder: int("display_order").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
