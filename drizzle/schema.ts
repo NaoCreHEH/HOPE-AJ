@@ -26,6 +26,7 @@ export const services = mysqlTable("services", {
   price: varchar("price", { length: 100 }).notNull(),
   details: text("details"),
   imageUrl: varchar("image_url", { length: 500 }),
+  icon: varchar("icon", { length: 8 }),
   displayOrder: int("display_order").default(0).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

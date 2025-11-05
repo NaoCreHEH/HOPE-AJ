@@ -48,7 +48,7 @@ const defaultServices = [
     description:
       "Atelier mêlant théorie, jeux, défis en équipes et restitution finale pour comprendre et prévenir le cyberharcèlement.",
     targetAudience: "Élèves du secondaire",
-    duration: "1h30",
+    duration: "1h",
     price: "40€ par classe",
     icon: "🛡️",
   },
