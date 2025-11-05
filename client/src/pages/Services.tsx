@@ -5,45 +5,104 @@ import { trpc } from "@/lib/trpc";
 
 const defaultServices = [
   {
-    title: "Trivial Poursuit Géant",
-    subtitle: "Outils pédagogique contre le harcèlement scolaire",
-    flower: "Iris (Iris germanica)",
-    flowerMeaning:
-      "L'iris symbolise la sagesse, l'espoir et la communication. C'est une fleur qui évoque également la diversité et l'harmonie.",
+    title: "Trivial Pursuit Géant – Version extérieure",
+    subtitle: "Jeu pédagogique grandeur nature",
+    flower: null,
+    flowerMeaning: null,
     description:
-      "Trivial poursuit géant réalisé dans une cour de récréation revisité sur les sujets suivants : Harcèlement, Cyber harcèlement, Discrimination, Consentement, Isolement, Agression sexuelle",
-    targetAudience: "Fin primaire (5,6èmes) et début secondaire (jusqu'à 2 secondaires)",
-    duration: "4h (2h d'installation - 2h de jeux)",
-    price: "60€",
-    icon: "🌺",
+      "Jeu grandeur nature en cour de récréation pour sensibiliser au vivre-ensemble et au respect. Déplacements en équipes avec dé géant, questions et défis.",
+    targetAudience: "Fin primaire (5e–6e) et début secondaire (1re–2e)",
+    duration: "4h (1h installation – 2h30 de jeu – 30 min débrief)",
+    price: "80€",
+    icon: "🎲",
   },
   {
-    title: "Sensibilisation au harcèlement",
-    subtitle: "Débat/discussions",
-    flower: "Chardon (Cirsium vulgare)",
-    flowerMeaning:
-      "Le chardon symbolise la protection et la défense. Il reflète le courage face à l'adversité, ainsi que la volonté de se défendre contre les comportements intrusifs.",
+    title: "Trivial Pursuit Géant – Version intérieure (plan B)",
+    subtitle: "Adaptation en salle",
+    flower: null,
+    flowerMeaning: null,
     description:
-      "Un cercle de paroles est organisé dans un local ou une classe où les élèves et un membre de l'ASBL sont mis en rond pour avoir une approche d'égal à égal. La discussion parle en grande partie du harcèlement en passant par des histoires personnelles de nos membres.",
-    targetAudience: "Primaire et secondaire (max 20 personnes par groupe)",
+      "Adaptation en salle (plateau ~1m x 1m) en cas de mauvais temps, mêmes objectifs et mécaniques que la version extérieure.",
+    targetAudience: "Fin primaire (5e–6e) et début secondaire (1re–2e)",
+    duration: "3h30 (30 min installation – 2h30 de jeu – 30 min débrief)",
+    price: "60€",
+    icon: "🏫",
+  },
+  {
+    title: "Sensibilisation au harcèlement – débats/discussions",
+    subtitle: "Cercle de paroles en classe",
+    flower: null,
+    flowerMeaning: null,
+    description:
+      "Échanges sur le harcèlement, histoires personnelles, réseaux sociaux, hypersensibilité, rôle de la famille. Conclusion positive et bienveillante.",
+    targetAudience: "Primaire et secondaire (max 20 élèves/groupe)",
     duration: "1h",
-    price: "20€ par classe (15€ si minimum 3 classes)",
-    icon: "🌿",
+    price: "20€ par classe (15€ si ≥ 3 classes/jour)",
+    icon: "🗣️",
   },
   {
-    title: "Formation sur le cyber-harcèlement",
-    subtitle: "Pour parents d'élèves",
-    flower: "Bleuet (Centaurea cyanus)",
-    flowerMeaning:
-      "Le bleuet est le symbole de la délicatesse et de la résilience dans un monde numérique parfois hostile. Il rappelle également la nécessité de cultiver la gentillesse et la compassion en ligne.",
+    title: "Cyber-Aventure – Mission contre le cyberharcèlement (élèves)",
+    subtitle: "Atelier interactif",
+    flower: null,
+    flowerMeaning: null,
     description:
-      "Formation destinée aux parents pour les sensibiliser aux dangers du cyber-harcèlement et leur donner des outils pour protéger leurs enfants.",
-    targetAudience: "Parents d'élèves",
+      "Atelier mêlant théorie, jeux, défis en équipes et restitution finale pour comprendre et prévenir le cyberharcèlement.",
+    targetAudience: "Élèves du secondaire",
     duration: "1h30",
-    price: "60€",
-    icon: "💐",
+    price: "40€ par classe",
+    icon: "🛡️",
+  },
+  {
+    title: "Formation sur le cyberharcèlement – Parents d’élèves",
+    subtitle: "Comprendre & protéger",
+    flower: null,
+    flowerMeaning: null,
+    description:
+      "Comprendre le (cyber)harcèlement, les risques des usages numériques et les outils concrets pour protéger ses enfants.",
+    targetAudience: "Parents d’élèves",
+    duration: "1h30",
+    price: "80€ par session",
+    icon: "👨‍👩‍👧",
+  },
+  {
+    title: "Formation sur le cyberharcèlement – Professeurs du secondaire",
+    subtitle: "Cadre, repérage, prévention",
+    flower: null,
+    flowerMeaning: null,
+    description:
+      "Mécanismes, signalements, cadre légal et responsabilités ; inclut 1h de sensibilisation via fiches pédagogiques multi-matières.",
+    targetAudience: "Professeurs du secondaire",
+    duration: "1h30",
+    price: "80€ par session",
+    icon: "🏫",
+  },
+  {
+    title: "Projets sur mesure – Activités personnalisées",
+    subtitle: "Conception adaptée à vos besoins",
+    flower: null,
+    flowerMeaning: null,
+    description:
+      "Événements, formations, sensibilisations : on adapte contenu, durée et objectifs selon votre contexte.",
+    targetAudience:
+      "Élèves (primaire, secondaire, HE/uni) & adultes (professeurs, équipes pédagogiques, parents…)",
+    duration: "Variable",
+    price: "À partir de 20€ / heure",
+    icon: "🧩",
+  },
+  {
+    title: "Présence lors de vos événements",
+    subtitle: "Stand / présentation – Gratuit",
+    flower: null,
+    flowerMeaning: null,
+    description:
+      "Présence gratuite lors d’événements, JPO ou présentations : découverte des services et échanges avec les participants.",
+    targetAudience: "Écoles, associations, organisateurs d’événements",
+    duration: "Variable",
+    price: "Gratuit",
+    icon: "🤝",
   },
 ];
+
 
 export default function Services() {
   const { data: servicesFromDb, isLoading } = trpc.services.list.useQuery();
