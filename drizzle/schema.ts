@@ -20,16 +20,16 @@ export const services = mysqlTable("services", {
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description").notNull(),
   flower: varchar("flower", { length: 255 }).notNull(),
-  flowerMeaning: text("flowerMeaning").notNull(),
-  targetAudience: varchar("targetAudience", { length: 255 }).notNull(),
+  flowerMeaning: text("flower_meaning").notNull(),
+  targetAudience: varchar("target_audience", { length: 255 }).notNull(),
   duration: varchar("duration", { length: 100 }).notNull(),
   price: varchar("price", { length: 100 }).notNull(),
   details: text("details"),
-  imageUrl: varchar("imageUrl", { length: 500 }),
-  displayOrder: int("displayOrder").default(0).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  imageUrl: varchar("image_url", { length: 500 }),
+  displayOrder: int("display_order").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Service = typeof services.$inferSelect;
@@ -40,40 +40,40 @@ export const projects = mysqlTable("projects", {
   title: varchar("title", { length: 255 }).notNull(),
   location: varchar("location", { length: 255 }).notNull(),
   description: text("description").notNull(),
-  imageUrl: varchar("imageUrl", { length: 500 }),
+  imageUrl: varchar("image_url", { length: 500 }),
   date: timestamp("date"),
-  displayOrder: int("displayOrder").default(0).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  displayOrder: int("display_order").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Project = typeof projects.$inferSelect;
 export type InsertProject = typeof projects.$inferInsert;
 
-export const teamMembers = mysqlTable("teamMembers", {
+export const teamMembers = mysqlTable("team_members", {
   id: int("id").autoincrement().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   role: varchar("role", { length: 255 }).notNull(),
   bio: text("bio"),
-  imageUrl: varchar("imageUrl", { length: 500 }),
-  displayOrder: int("displayOrder").default(0).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  imageUrl: varchar("image_url", { length: 500 }),
+  displayOrder: int("display_order").default(0).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export type TeamMember = typeof teamMembers.$inferSelect;
 export type InsertTeamMember = typeof teamMembers.$inferInsert;
 
-export const contactMessages = mysqlTable("contactMessages", {
+export const contactMessages = mysqlTable("contact_messages", {
   id: int("id").autoincrement().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   email: varchar("email", { length: 320 }).notNull(),
   subject: varchar("subject", { length: 255 }),
   message: text("message").notNull(),
-  isRead: boolean("isRead").default(false).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  isRead: boolean("is_read").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export type ContactMessage = typeof contactMessages.$inferSelect;
