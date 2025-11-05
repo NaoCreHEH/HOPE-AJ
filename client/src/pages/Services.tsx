@@ -105,7 +105,11 @@ const defaultServices = [
 
 
 export default function Services() {
-  const { data: servicesFromDb, isLoading } = trpc.services.list.useQuery();
+  const { data: servicesFromDb, isLoading, error , isFetching } = trpc.services.list.useQuery();
+
+  if (error) {
+    console.error("Error fetching services:", error);
+  }
   const services = servicesFromDb && servicesFromDb.length > 0 ? servicesFromDb : defaultServices;
 
   return (
